@@ -154,4 +154,23 @@ class MemberRepositoryTest {
         }
     }
 
+    @Test
+    public void returnType() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("AAA", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> result = memberRepository.findListByUsername("aaa");   // List는 일치하는 항목 없어도 null이 아님
+        System.out.println("result : " + result.size());
+
+        Member findMember = memberRepository.findMemberByUsername("aaa");
+        System.out.println("findMember : " + findMember);
+
+        Optional<Member> optionalMember = memberRepository.findOptionalByUsername("aaa"); // 데이터 유무 확실하지 않을땐 optional
+        System.out.println("optionalMember : " + optionalMember);
+
+        //단건 반환 유형인데 복수 개의 데이터가 조회되면 예외가 터짐
+        //Optional<Member> testMember = memberRepository.findOptionalByUsername("AAA");
+    }
 }
