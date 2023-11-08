@@ -173,4 +173,5 @@ class MemberRepositoryTest {
         //단건 반환 유형인데 복수 개의 데이터가 조회되면 예외가 터짐
         //Optional<Member> testMember = memberRepository.findOptionalByUsername("AAA");
     }
+
 }
