@@ -16,7 +16,12 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
     open-in-view: false
-
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 2000
+  #      one-indexed-parameters: true   #pageable 1부터 시작하게 설정, 그러나 pageable 객체 안 값은 0을 기준으로 함
 logging:
   level:
     org.hibernate.SQL: debug
