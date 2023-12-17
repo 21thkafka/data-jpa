@@ -37,7 +37,7 @@ public class MemberController {
                 .map(MemberDto::new);   // 꼭 dto로 변환하여 반환해줘야 함
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void init(){
 
         for (int i = 0; i< 100; i++){
