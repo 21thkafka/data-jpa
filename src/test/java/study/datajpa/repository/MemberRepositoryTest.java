@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -363,5 +362,38 @@ class MemberRepositoryTest {
 
 
         assertThat(result.get(0).getUsername()).isEqualTo("m1");
+    }
+
+    @Test
+    public void projections(){
+        //given
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+        em.persist(m1);
+        em.persist(m2);
+
+
+        em.flush();
+        em.clear();
+
+        //when
+        //List<UsernameOnly> result = memberRepository.findProjectionsByUsername("m1");
+        //List<UsernameOnlyDto> result = memberRepository.findProjectionsByUsername("m1", UsernameOnlyDto.class);    // 동적처리 가능
+        /*
+        for (UsernameOnlyDto usernameOnly: result) {
+            System.out.println("usernameOnly : " + usernameOnly.getUsername());
+        }*/
+        //중첩구조 - left join으로 불러옴
+        List<NestedClosedProjections> result = memberRepository.findProjectionsByUsername("m1", NestedClosedProjections.class);
+        for (NestedClosedProjections nestedClosedProjections : result) {
+            String username = nestedClosedProjections.getUsername();
+            System.out.println("username : " + username);
+            String teamName = nestedClosedProjections.getTeam().getName();
+            System.out.println("teamName : " + teamName);
+            
+        }
     }
 }
